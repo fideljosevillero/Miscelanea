@@ -16,9 +16,8 @@ import java.util.*;
 public class WriteFile {
     
     private static final String FILENAME = "C:\\Users\\fidel.villero\\Desktop\\Miscelanea\\log_numero_casillero_vacio.txt";
-//    private static String contenidoFile = "";
-    private static FileReader fr;// = new FileReader(FILENAME);
-    private static BufferedReader br;// = new BufferedReader(fr);
+    private static FileReader fr;
+    private static BufferedReader br;
     private static BufferedWriter bw = null;
     private static FileWriter fw = null;
 
@@ -37,14 +36,13 @@ public class WriteFile {
         }
     }
     
-    // Leer
     public static List<String> readFile(){
         List<String> contenidoFile = new ArrayList();
         try {
             fr = new FileReader(FILENAME);
             String sCurrentLine;
-            BufferedReader br = new BufferedReader(new FileReader(FILENAME));
-            while ((sCurrentLine = br.readLine()) != null) {
+            BufferedReader brd = new BufferedReader(new FileReader(FILENAME));
+            while ((sCurrentLine = brd.readLine()) != null) {
                 contenidoFile.add(sCurrentLine);    
                 System.out.println(contenidoFile);
             }
@@ -55,9 +53,77 @@ public class WriteFile {
         return contenidoFile;
     }
     
+    
+    private static String[] listaConCodigos;
+    private static String[] listaParaAutocompletar;
+    static String[] id_ciudad;
+    public static void readFileCiudadesDIAN(){
+       
+        Map<Integer,String> listaCiudades = new LinkedHashMap();
+
+        try 
+        {
+//            File f = new File("/ciudades.txt");
+//            System.out.println("'''" + f.getAbsolutePath());
+            
+            InputStream inputStream = new FileInputStream("C:\\Users\\fidel.villero\\Desktop\\Miscelanea\\src\\File\\ciudades.txt");// FacesContext.getCurrentInstance().getExternalContext().getResourceAsStream("/WEB-INF/classes/TCC/UTIL/ciudades.txt");
+            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+            
+            int j;
+            try 
+            {
+		j = inputStream.read();
+		while (j != -1) 
+                {
+                    byteArrayOutputStream.write(j);
+                    j = inputStream.read();
+		}
+			
+                inputStream.close();
+            } 
+            catch (Exception e) 
+            {
+                e.printStackTrace();
+            }     
+            
+            listaConCodigos = byteArrayOutputStream.toString().split("\n");
+            listaParaAutocompletar = new String[listaConCodigos.length];
+            
+            for (int x = 0; x < listaConCodigos.length; x++) 
+            {
+                id_ciudad = listaConCodigos[x].split(",");
+                listaParaAutocompletar[x] = id_ciudad[1] + ", " + id_ciudad[2];
+                System.out.println("--- " + Integer.parseInt(id_ciudad[0])+"," + id_ciudad[1] + " / " + id_ciudad[2] );
+                listaCiudades.put(Integer.parseInt(id_ciudad[0]), id_ciudad[1] + " / " + id_ciudad[2]);
+            }     
+        }catch (Exception e) 
+        {
+            e.printStackTrace();
+        }     
+            
+//            listaConCodigos = byteArrayOutputStream.toString().split("\n");
+//            listaParaAutocompletar = new String[listaConCodigos.length];
+//            
+//            for (int x = 0; x < listaConCodigos.length; x++) 
+//            {
+//                id_ciudad = listaConCodigos[x].split(",");
+//                listaParaAutocompletar[x] = id_ciudad[1] + ", " + id_ciudad[2];
+//                listaCiudades.put(Integer.parseInt(id_ciudad[0]), id_ciudad[1] + " / " + id_ciudad[2]);
+//            }            
+
+//        }catch (Exception er) {
+//            System.out.println("ERROR readFileCiudadesDIAN " + er.toString());
+        //}
+        //return listaCiudades;
+    }
+    
     public static void main(String[] args) throws IOException {
-        List<String> contenido= readFile();
-        writeLogFile(contenido);
+        // Escribir y leer texto aleatorio
+//        List<String> contenido= readFile();
+//        writeLogFile(contenido);
+        
+        // Leer estructura de archivo determinada(Ciudades DIAN)
+        readFileCiudadesDIAN();
     }
     
 }

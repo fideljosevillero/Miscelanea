@@ -8,16 +8,28 @@ package Threads;
  *
  * @author fidel.villero
  */
-public class Monitor1 implements Runnable {
+public class Monitor1 extends Thread /*implements Runnable*/ {
 
+    private int numThread=0;
+    
+    public Monitor1(int numThread){
+        this.numThread = numThread;
+    }
+    
     @Override
     public void run() {
-        this.metodo();
+        try{
+            //Thread.sleep((long)(Math.random()*5)*100);
+            //Thread.sleep(200);
+            this.metodo();
+        }catch(Exception er){
+            System.out.println("error monitor1 "+er);
+        }
     }
     
     public synchronized void metodo(){
-        for(int i=0; i<10; i++){
-            System.out.println("imprimiendo monitor1 " + i);
-        }
+        //for(int i=0; i<10; i++){
+            System.out.println("imprimiendo monitor " + numThread);
+        //}
     }
 }

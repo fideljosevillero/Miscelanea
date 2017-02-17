@@ -7,6 +7,7 @@ package miscelanea;
 import Coleccion_Iterador.Coleccion;
 import StringBuilder_VS_String.Cadena;
 import Threads.Monitor1;
+import java.text.DecimalFormat;
 
 /**
  *
@@ -36,7 +37,18 @@ class Miscelanea {
 //        m.start();
 //        m2.start();
         
+        //DecimalFormat formateador = new DecimalFormat("###,###.##");
+//        DecimalFormat formateador = new DecimalFormat("########");
+//        //Este daria a la salida 1,000
+//        System.out.println (formateador.format (1000));
+//        //Este otro 10,000
+//        System.out.println (formateador.format (Integer.parseInt("10,000")));
         
+//        int d = Integer.parseInt("26,138");
+//        System.out.println("resultado " + d);
         
+        String s = "10,000";
+        String t = s.replace(",", "");
+        System.out.println(t);
     }
 }
